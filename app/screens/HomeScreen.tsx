@@ -1,11 +1,12 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { theme } from "../theme";
-import { Icon, Text, Button, ActivityIndicator } from "react-native-paper";
+import { Icon, Text, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "..";
 import Stats from "../components/Stats";
+import { Feather } from "@expo/vector-icons";
 
 type HomeScreenNavigationProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -37,7 +38,9 @@ export default function HomeScreen() {
           style={styles.backgroundImage}
           onLoadEnd={() => setIsLoading(false)}
         >
-          <Button mode="elevated">Ask</Button>
+          <View style={styles.buttonContainer}>
+            <Feather name="mic" size={24} color="white" />
+          </View>
         </ImageBackground>
       </View>
     </>
@@ -67,8 +70,7 @@ const styles = StyleSheet.create({
   backgroundImage: {
     width: "100%",
     flexGrow: 2,
-    alignItems: "center",
-    justifyContent: "center",
+    position: "relative",
   },
   indicator: {
     position: "absolute",
@@ -80,5 +82,16 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttonContainer: {
+    position: "absolute",
+    top: "75%",
+    left: "42%",
+    width: 62,
+    height: 62,
+    borderRadius: 31,
+    backgroundColor: theme.colors.backdrop,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
