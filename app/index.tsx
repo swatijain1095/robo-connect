@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PaperProvider } from "react-native-paper";
 import LoginScreen from "./screens/LoginScreen";
 import HomeScreen from "./screens/HomeScreen";
+import { theme } from "./theme";
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,7 @@ export type RootStackParamList = {
 
 export default function Index() {
   return (
-    <PaperProvider>
+    <PaperProvider theme={theme}>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
