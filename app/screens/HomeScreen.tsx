@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "..";
 import Stats from "../components/Stats";
 import { Feather } from "@expo/vector-icons";
+import RunDiagnosticsButton from "../components/RunDiagnosticsButton";
 
 type HomeScreenNavigationProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -29,9 +30,10 @@ export default function HomeScreen() {
         <View style={styles.innerContainer}>
           <View style={styles.switchContainer}>
             <Text variant="displayLarge">NEO</Text>
-            <Icon source={"account-cog"} size={50} />
+            <Icon source={"account-cog"} size={55} />
           </View>
           <Stats />
+          <RunDiagnosticsButton />
         </View>
         <ImageBackground
           source={require("../../assets/images/NEO_face_closeup.jpg")}
@@ -59,17 +61,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     marginVertical: 50,
-    gap: 24,
   },
   switchContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 8,
+    marginBottom: 32,
   },
   backgroundImage: {
     width: "100%",
-    flexGrow: 2,
+    flexGrow: 1.2,
     position: "relative",
   },
   indicator: {

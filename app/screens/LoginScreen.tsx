@@ -5,6 +5,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 import { RootStackParamList } from "..";
+import { theme } from "../theme";
 
 type LoginScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -12,11 +13,17 @@ type LoginScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 export default function LoginScreen() {
-  const videoRef = React.useRef<Video>(null);
   const navigation = useNavigation<LoginScreenNavigationProp>();
+  const [loading, setLoading] = React.useState(false);
+  const videoRef = React.useRef<Video>(null);
 
-  const handleLogin = () => {
-    navigation.navigate("Home");
+  const handleLogin = async () => {
+    setLoading(true);
+    // this will be replaced with connect logic and will redirect to home screen
+    await setTimeout(() => {
+      setLoading(false);
+      navigation.navigate("Home");
+    }, 1000);
   };
 
   return (
@@ -31,7 +38,13 @@ export default function LoginScreen() {
         shouldPlay
       />
       <View style={styles.overlay}>
-        <Button mode="contained" onPress={handleLogin} style={styles.button}>
+        <Button
+          mode="contained"
+          onPress={handleLogin}
+          contentStyle={{ height: 50 }}
+          labelStyle={theme.fonts.titleLarge}
+          loading={loading}
+        >
           Login
         </Button>
       </View>
@@ -52,11 +65,8 @@ const styles = StyleSheet.create({
   },
   overlay: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-end",
     alignItems: "center",
-  },
-  button: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingBottom: 100,
   },
 });
