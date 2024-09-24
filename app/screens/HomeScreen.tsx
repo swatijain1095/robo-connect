@@ -1,18 +1,11 @@
 import { View, StyleSheet, ImageBackground } from "react-native";
 import { theme } from "../theme";
-import {
-  Card,
-  Icon,
-  Paragraph,
-  Text,
-  Title,
-  Button,
-  ActivityIndicator,
-} from "react-native-paper";
+import { Icon, Text, Button, ActivityIndicator } from "react-native-paper";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RootStackParamList } from "..";
+import Stats from "../components/Stats";
 
 type HomeScreenNavigationProps = NativeStackNavigationProp<
   RootStackParamList,
@@ -37,23 +30,7 @@ export default function HomeScreen() {
             <Text variant="displayLarge">NEO</Text>
             <Icon source={"account-cog"} size={50} />
           </View>
-          <View style={styles.cardContainer}>
-            <Card style={styles.card}>
-              <Card.Content>
-                <Title>Battery</Title>
-                <Paragraph>Charge: 75%</Paragraph>
-                <Paragraph>ETA: 5 hours</Paragraph>
-              </Card.Content>
-            </Card>
-
-            <Card style={styles.card}>
-              <Card.Content>
-                <Title>Diagnose</Title>
-                <Paragraph>No major issues</Paragraph>
-                <Paragraph>some minor issues</Paragraph>
-              </Card.Content>
-            </Card>
-          </View>
+          <Stats />
         </View>
         <ImageBackground
           source={require("../../assets/images/NEO_face_closeup.jpg")}
@@ -86,15 +63,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 8,
-  },
-  cardContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    gap: 8,
-  },
-  card: {
-    marginBottom: 16,
-    width: "48%",
   },
   backgroundImage: {
     width: "100%",
