@@ -1,10 +1,23 @@
+import { useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ResizeMode, Video } from "expo-av";
 import React from "react";
 import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
+import { RootStackParamList } from "..";
+
+type LoginScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 export default function LoginScreen() {
   const videoRef = React.useRef<Video>(null);
+  const navigation = useNavigation<LoginScreenNavigationProp>();
+
+  const handleLogin = () => {
+    navigation.navigate("Home");
+  };
 
   return (
     <View style={styles.container}>
@@ -18,7 +31,7 @@ export default function LoginScreen() {
         shouldPlay
       />
       <View style={styles.overlay}>
-        <Button mode="contained" style={styles.button}>
+        <Button mode="contained" onPress={handleLogin} style={styles.button}>
           Login
         </Button>
       </View>
