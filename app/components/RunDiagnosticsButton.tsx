@@ -1,9 +1,16 @@
 import { Card, Icon } from "react-native-paper";
 import { theme } from "../theme";
 
-export default function RunDiagnosticsButton() {
+export default function RunDiagnosticsButton({
+  onPress,
+}: {
+  onPress: () => void;
+}) {
   return (
-    <Card style={{ backgroundColor: theme.colors.secondaryBackdrop }}>
+    <Card
+      onPress={onPress}
+      style={{ backgroundColor: theme.colors.secondaryBackdrop }}
+    >
       <Card.Content>
         <Card.Title
           titleVariant="titleLarge"

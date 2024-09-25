@@ -33,7 +33,9 @@ export default function HomeScreen() {
             <Icon source={"account-cog"} size={55} />
           </View>
           <Stats />
-          <RunDiagnosticsButton />
+          <RunDiagnosticsButton
+            onPress={() => navigation.navigate("Diagnose")}
+          />
         </View>
         <ImageBackground
           source={require("../../assets/images/NEO_face_closeup.jpg")}
