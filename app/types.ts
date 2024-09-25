@@ -8,4 +8,9 @@ export type BodyParts =
   | "rightLeg"
   | "body";
 
-export type DiagnosticStatus = Record<BodyParts, HealthStatus>;
+export type FullHealthStatus = {
+  status: HealthStatus;
+  message: string;
+};
+
+export type DiagnosticStatus = Record<BodyParts, FullHealthStatus>;

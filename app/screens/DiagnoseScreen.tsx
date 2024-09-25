@@ -1,22 +1,49 @@
 import React, { useEffect } from "react";
-import { SafeAreaView, Dimensions, StyleSheet, View } from "react-native";
+import {
+  SafeAreaView,
+  Dimensions,
+  StyleSheet,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { Svg } from "react-native-svg";
 import RobotSvg from "../../assets/images/NEO_full_palette.svg";
 import { BodyParts, DiagnosticStatus, HealthStatus } from "../types";
 import { partsCordinates } from "../constants";
 import ScanningSkeleton from "../components/ScanningSkeleton";
+import { Card, Icon, Paragraph } from "react-native-paper";
+import { theme } from "../theme";
+import startCase from "lodash/startCase";
 
 const { width } = Dimensions.get("window");
 export const ROBOT_WIDTH = width - 100;
 export const ROBOT_HEIGHT = ROBOT_WIDTH * 2.4;
 
 const mockData: DiagnosticStatus = {
-  head: "ok",
-  leftArm: "warning",
-  rightArm: "ok",
-  body: "ok",
-  leftLeg: "error",
-  rightLeg: "ok",
+  head: {
+    status: "ok",
+    message: "Everything is ok!",
+  },
+  leftArm: {
+    status: "warning",
+    message: "software issue. Please update to latest version",
+  },
+  rightArm: {
+    status: "ok",
+    message: "Everything is ok!",
+  },
+  body: {
+    status: "ok",
+    message: "Everything is ok!",
+  },
+  leftLeg: {
+    status: "error",
+    message: "hardware issue. Please contact support",
+  },
+  rightLeg: {
+    status: "ok",
+    message: "Everything is ok!",
+  },
 };
 
 const statusColors: Record<HealthStatus, string> = {
@@ -25,11 +52,19 @@ const statusColors: Record<HealthStatus, string> = {
   error: "#F44336",
 };
 
+const statusIcons: Record<HealthStatus, string> = {
+  ok: "check-circle-outline",
+  warning: "alert-circle-outline",
+  error: "alert-circle",
+};
+
 export default function DiagnoseScreen() {
   const [loading, setLoading] = React.useState(false);
-  const [diagnosticsStatus, setDiagnosticsStatus] = React.useState<
-    DiagnosticStatus | {}
-  >({});
+  const [diagnosticsStatus, setDiagnosticsStatus] =
+    React.useState<DiagnosticStatus | null>(null);
+  const [selectedPart, setSelectedPart] = React.useState<BodyParts | null>(
+    null
+  );
 
   const runDiagnose = () => {
     setLoading(true);
@@ -54,16 +89,43 @@ export default function DiagnoseScreen() {
         >
           <RobotSvg width={ROBOT_WIDTH} height={ROBOT_HEIGHT} />
         </Svg>
-        {Object.entries(diagnosticsStatus).map(([key, value]) => (
-          <View
-            style={[
-              styles.indicator,
-              partsCordinates[key as BodyParts],
-              { backgroundColor: statusColors[value] },
-            ]}
-            key={key}
-          />
-        ))}
+        {diagnosticsStatus &&
+          Object.entries(diagnosticsStatus).map(([key, value]) => (
+            <TouchableOpacity
+              style={[
+                styles.indicator,
+                partsCordinates[key as BodyParts],
+                { backgroundColor: statusColors[value.status] },
+              ]}
+              key={key}
+              onPress={() => setSelectedPart(key as BodyParts)}
+            />
+          ))}
+        {diagnosticsStatus && selectedPart && (
+          <Card
+            style={{
+              ...partsCordinates[selectedPart as BodyParts],
+              ...styles.cardContainer,
+            }}
+          >
+            <Card.Content>
+              <Card.Title
+                style={styles.cardTitle}
+                title={startCase(selectedPart)}
+                titleVariant="titleMedium"
+                right={() => (
+                  <Icon
+                    source={statusIcons[diagnosticsStatus[selectedPart].status]}
+                    size={24}
+                  />
+                )}
+              />
+              <Card.Content style={{ paddingHorizontal: 0 }}>
+                <Paragraph>{diagnosticsStatus[selectedPart].message}</Paragraph>
+              </Card.Content>
+            </Card.Content>
+          </Card>
+        )}
       </View>
     </SafeAreaView>
   );
@@ -87,5 +149,17 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 2,
     borderColor: "white",
+  },
+  cardContainer: {
+    position: "absolute",
+    left: -70,
+    right: "auto",
+    width: 150,
+    backgroundColor: theme.colors.secondaryBackdrop,
+  },
+  cardTitle: {
+    minHeight: 32,
+    paddingLeft: 0,
+    alignItems: "flex-start",
   },
 });
