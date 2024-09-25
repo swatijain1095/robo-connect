@@ -9,7 +9,7 @@ export default function ScanningSkeleton() {
 
   useEffect(() => {
     const moveDown = Animated.timing(position, {
-      toValue: height,
+      toValue: height - 200,
       duration: 1200,
       useNativeDriver: true,
     });
@@ -35,6 +35,9 @@ export default function ScanningSkeleton() {
     >
       <LinearGradient
         colors={[
+          "rgba(34, 197, 94, 0)",
+          "rgba(34, 197, 94, 0.1)",
+          "rgba(34, 197, 94, 0.2)",
           "rgba(34, 197, 94, 0.2)",
           "rgba(34, 197, 94, 0.1)",
           "rgba(34, 197, 94, 0)",
@@ -48,7 +51,7 @@ export default function ScanningSkeleton() {
 const styles = StyleSheet.create({
   container: {
     position: "absolute",
-    top: 0,
+    top: 40,
     width: "100%",
     zIndex: 99,
     height: height * 0.3,
