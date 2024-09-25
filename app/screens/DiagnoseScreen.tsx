@@ -1,18 +1,14 @@
 import React, { useEffect } from "react";
-import {
-  SafeAreaView,
-  Dimensions,
-  StyleSheet,
-  View,
-  DimensionValue,
-} from "react-native";
+import { SafeAreaView, Dimensions, StyleSheet, View } from "react-native";
 import { Svg } from "react-native-svg";
 import RobotSvg from "../../assets/images/NEO_full_palette.svg";
 import { BodyParts, DiagnosticStatus, HealthStatus } from "../types";
+import { partsCordinates } from "../constants";
+import ScanningSkeleton from "../components/ScanningSkeleton";
 
 const { width } = Dimensions.get("window");
-const ROBOT_WIDTH = width - 100;
-const ROBOT_HEIGHT = ROBOT_WIDTH * 2.4;
+export const ROBOT_WIDTH = width - 100;
+export const ROBOT_HEIGHT = ROBOT_WIDTH * 2.4;
 
 const mockData: DiagnosticStatus = {
   head: "ok",
@@ -21,53 +17,6 @@ const mockData: DiagnosticStatus = {
   body: "ok",
   leftLeg: "error",
   rightLeg: "ok",
-};
-
-const partsCordinates: Record<
-  BodyParts,
-  {
-    top: DimensionValue;
-    left: DimensionValue;
-    bottom: DimensionValue;
-    right: DimensionValue;
-  }
-> = {
-  head: {
-    top: "5%",
-    left: "60%",
-    bottom: "auto",
-    right: "auto",
-  },
-  leftArm: {
-    top: "30%",
-    left: "45%",
-    bottom: "auto",
-    right: "auto",
-  },
-  rightArm: {
-    top: "30%",
-    right: "5%",
-    bottom: "auto",
-    left: "auto",
-  },
-  body: {
-    top: "25%",
-    left: "60%",
-    bottom: "auto",
-    right: "auto",
-  },
-  leftLeg: {
-    bottom: "20%",
-    left: "50%",
-    top: "auto",
-    right: "auto",
-  },
-  rightLeg: {
-    bottom: "20%",
-    right: "15%",
-    top: "auto",
-    left: "auto",
-  },
 };
 
 const statusColors: Record<HealthStatus, string> = {
@@ -96,6 +45,7 @@ export default function DiagnoseScreen() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {loading && <ScanningSkeleton />}
       <View style={styles.robotContainer}>
         <Svg
           width={ROBOT_WIDTH}
