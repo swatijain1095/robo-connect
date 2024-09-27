@@ -1,5 +1,5 @@
-import { Card, Icon } from "react-native-paper";
-import { theme } from "../theme";
+import { Icon } from "react-native-paper";
+import CardComponent from "./CardComponent";
 
 export default function RunDiagnosticsButton({
   onPress,
@@ -7,24 +7,13 @@ export default function RunDiagnosticsButton({
   onPress: () => void;
 }) {
   return (
-    <Card
+    <CardComponent
+      title="Run Diagnostics"
+      left={() => <Icon source="speedometer" size={32} />}
       onPress={onPress}
-      style={{ backgroundColor: theme.colors.secondaryBackdrop }}
-    >
-      <Card.Content>
-        <Card.Title
-          titleVariant="titleLarge"
-          style={{
-            paddingLeft: 0,
-            minHeight: 36,
-          }}
-          titleStyle={{ marginBottom: 0 }}
-          title="Run Diagnostics"
-          leftStyle={{ marginRight: 0 }}
-          left={() => <Icon source="speedometer" size={32} />}
-          right={() => <Icon source="chevron-right" size={32} />}
-        />
-      </Card.Content>
-    </Card>
+      right={() => <Icon source="chevron-right" size={32} />}
+      titleVariant="titleLarge"
+      cardStyle={{ minWidth: "100%" }}
+    />
   );
 }

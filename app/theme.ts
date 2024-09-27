@@ -12,7 +12,7 @@ export const theme = {
     disabled: "#DFDED9",
     placeholder: "#9E9A93",
     backdrop: "rgba(58, 52, 52, 0.4)",
-    secondaryBackdrop: "#E8E8E4",
+    secondaryBackdrop: "#D6D6D2",
     notification: "#9E9A93",
   },
 };

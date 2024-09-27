@@ -11,9 +11,10 @@ import RobotSvg from "../../assets/images/NEO_full_palette.svg";
 import { BodyParts, DiagnosticStatus, HealthStatus } from "../types";
 import { partsCordinates } from "../constants";
 import ScanningSkeleton from "../components/ScanningSkeleton";
-import { Card, Icon, Paragraph } from "react-native-paper";
+import { Icon } from "react-native-paper";
 import { theme } from "../theme";
 import startCase from "lodash/startCase";
+import CardComponent from "../components/CardComponent";
 
 const { width } = Dimensions.get("window");
 export const ROBOT_WIDTH = width - 100;
@@ -102,29 +103,22 @@ export default function DiagnoseScreen() {
             />
           ))}
         {diagnosticsStatus && selectedPart && (
-          <Card
-            style={{
+          <CardComponent
+            title={startCase(selectedPart)}
+            titleVariant="titleMedium"
+            right={() => (
+              <Icon
+                source={statusIcons[diagnosticsStatus[selectedPart].status]}
+                size={24}
+              />
+            )}
+            cardStyle={{
               ...partsCordinates[selectedPart as BodyParts],
               ...styles.cardContainer,
             }}
-          >
-            <Card.Content>
-              <Card.Title
-                style={styles.cardTitle}
-                title={startCase(selectedPart)}
-                titleVariant="titleMedium"
-                right={() => (
-                  <Icon
-                    source={statusIcons[diagnosticsStatus[selectedPart].status]}
-                    size={24}
-                  />
-                )}
-              />
-              <Card.Content style={{ paddingHorizontal: 0 }}>
-                <Paragraph>{diagnosticsStatus[selectedPart].message}</Paragraph>
-              </Card.Content>
-            </Card.Content>
-          </Card>
+            cardTitleStyle={{ alignItems: "flex-start" }}
+            description={diagnosticsStatus[selectedPart].message}
+          />
         )}
       </View>
     </SafeAreaView>
@@ -156,10 +150,5 @@ const styles = StyleSheet.create({
     right: "auto",
     width: 150,
     backgroundColor: theme.colors.secondaryBackdrop,
-  },
-  cardTitle: {
-    minHeight: 32,
-    paddingLeft: 0,
-    alignItems: "flex-start",
   },
 });
